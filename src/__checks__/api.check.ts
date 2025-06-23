@@ -27,7 +27,7 @@ for (let i = 0; i < environments.length; i++) {
 
     new ApiCheck(`${method}-${environments[i]}-${cleanName}-api`, {
       name: `${method} ${environments[i]} ${cleanName} API`,
-      // group: environments[i],
+      group: `Group ${environments[i]}`,
       tags: [`${environments[i]}-${cleanName}`, `${environments[i]}`],
       degradedResponseTime: 5000,
       maxResponseTime: 10000,
