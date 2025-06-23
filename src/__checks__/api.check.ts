@@ -1,24 +1,58 @@
-import * as path from 'path'
 import { ApiCheck, AssertionBuilder } from 'checkly/constructs'
-import { websiteGroup } from './website-group.check'
 
-new ApiCheck('books-api-check-1', {
-  name: 'Books API',
-  group: websiteGroup,
-  degradedResponseTime: 10000,
-  maxResponseTime: 20000,
-  setupScript: {
-    entrypoint: path.join(__dirname, './utils/setup.ts')
+const endpoint_array_and_options = [
+  {"downloadDevices": [ "GET", "https://api-mobile.zscalerbeta.net/papi/public/v1/downloadDevices?osTypes=1,2",
+  "https://api-mobile.zscalerbeta.net/papi/public/v1/downloadDevices?registrationTypes=1,3",]},
+  {"downloadDisableReasons": ["GET", ]
+
   },
-  request: {
-    url: 'https://danube-web.shop/api/books',
-    method: 'GET',
-    followRedirects: true,
-    skipSSL: false,
-    assertions: [
-      AssertionBuilder.statusCode().equals(200),
-      AssertionBuilder.jsonBody('$[0].id').isNotNull(),
-    ],
-  },
-  runParallel: true,
-})
+
+
+  "public/v1/downloadDevices?osTypes=1,2", "/papi/public/v1/downloadDisableReasons",
+  "/papi/public/v1/downloadServiceStatus", "/papi/public/v1/forceRemoveDevices"
+
+]
+
+const environment = "beta"
+
+// new ApiCheck(`GET ${environment} download devices`, {
+//   name: `GET-${environment}-download-devices-api`,
+//   // group: environment,
+//   degradedResponseTime: 5000,
+//   maxResponseTime: 10000,
+//   request: {
+//     url: 'https://api-mobile.zscalerbeta.net/papi/public/v1/downloadDevices?osTypes=1,2',
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json',
+//       'Accept': 'application/json',
+//     },
+//     followRedirects: true,
+//     skipSSL: false,
+//     assertions: [
+//       AssertionBuilder.statusCode().equals(200),
+//     ],
+//   },
+//   runParallel: true,
+// })
+
+// new ApiCheck(`GET ${environment} download devices`, {
+//   name: `GET-${environment}-download-devices-api`,
+//   // group: environment,
+//   degradedResponseTime: 5000,
+//   maxResponseTime: 10000,
+//   request: {
+//     url: 'https://api-mobile.zscalerbeta.net/papi/public/v1/downloadDevices?osTypes=1,2',
+//     method: 'GET',
+//     headers: {
+//       'Content-Type': 'application/json',
+//       'Accept': 'application/json',
+//     },
+//     followRedirects: true,
+//     skipSSL: false,
+//     assertions: [
+//       AssertionBuilder.statusCode().equals(200),
+//     ],
+//   },
+//   runParallel: true,
+// })
