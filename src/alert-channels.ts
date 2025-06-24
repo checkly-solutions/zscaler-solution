@@ -1,34 +1,34 @@
-import { URL } from 'node:url'
+import { URL } from 'node:url';
 import {
   SmsAlertChannel,
   EmailAlertChannel,
   SlackAlertChannel,
-  WebhookAlertChannel
-} from 'checkly/constructs'
+  WebhookAlertChannel,
+} from 'checkly/constructs';
 
 const sendDefaults = {
   sendFailure: true,
   sendRecovery: true,
   sendDegraded: false,
   sslExpiry: true,
-  sslExpiryThreshold: 30
-}
+  sslExpiryThreshold: 30,
+};
 
 export const smsChannel = new SmsAlertChannel('sms-channel-1', {
   phoneNumber: '0031061234567890',
-  ...sendDefaults
-})
+  ...sendDefaults,
+});
 
 export const emailChannel = new EmailAlertChannel('email-channel-1', {
   address: 'alerts@acme.com',
-  ...sendDefaults
-})
+  ...sendDefaults,
+});
 
 export const slackChannel = new SlackAlertChannel('slack-channel-1', {
   url: new URL('https://hooks.slack.com/services/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'),
   channel: '#ops',
-  ...sendDefaults
-})
+  ...sendDefaults,
+});
 
 export const webhookChannel = new WebhookAlertChannel('webhook-channel-1', {
   name: 'Pushover webhook',
@@ -44,5 +44,5 @@ export const webhookChannel = new WebhookAlertChannel('webhook-channel-1', {
     "expire":10800,
     "message":"{{ALERT_TYPE}} {{STARTED_AT}} ({{RESPONSE_TIME}}ms) {{RESULT_LINK}}"
   }`,
-  ...sendDefaults
-})
+  ...sendDefaults,
+});

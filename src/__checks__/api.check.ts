@@ -1,8 +1,7 @@
 // @ts-nocheck
 import { ApiCheck, AssertionBuilder, RetryStrategyBuilder } from 'checkly/constructs';
 import { endpoint_array } from './utils/endpoint-array';
-
-console.log(endpoint_array, 'endpoint array'); // Verify it works
+import { apiGroups } from './resources/createGroup';
 
 const environments = ['BETA', 'ZS1', 'ZS2'];
 
@@ -11,6 +10,7 @@ const ZS2_API_URL = 'https://mobileadmin.zscalertwo.net';
 const BETA_API_URL = 'https://mobileadmin.zscalerbeta.net';
 
 for (let i = 0; i < environments.length; i++) {
+
   for (const endpoint of endpoint_array) {
     let cleanName = endpoint.name.replaceAll(' ', '-').toLowerCase();
     let environment = environments[i];
@@ -25,13 +25,15 @@ for (let i = 0; i < environments.length; i++) {
       baseUrl = BETA_API_URL;
     }
 
+    console.log('environment', environment)
+
     new ApiCheck(`${method}-${environments[i]}-${cleanName}-api`, {
       name: `${method} ${environments[i]} ${cleanName} API`,
-      group: `Group ${environments[i]}`,
+      group: apiGroups[environments[i]],
       tags: [`${environments[i]}-${cleanName}`, `${environments[i]}`],
       degradedResponseTime: 5000,
       maxResponseTime: 10000,
-      activated: false,
+      activated: true,
       frequency: 60,
       request: {
         url: `${baseUrl}${endpoint.url}`,
@@ -50,34 +52,3 @@ for (let i = 0; i < environments.length; i++) {
     });
   }
 }
-
-// for (let i = 0; i < endpoint_array.length; i++) {
-//   const body = process.env[`${endpoint_array[i]}_API_KEY`];
-//   if (!body) {
-//     throw new Error(`${endpoint_array[i]}_API_KEY environment variable is not set`);
-//   }
-
-//   new ApiCheck(`${method}-${environment}-${cleanName}-api`, {
-//     name: `${method} ${environment} ${cleanName} api`,
-//     // group: environment,
-//     tags: [`${environment}-${cleanName}`, `${environment}`],
-//     degradedResponseTime: 5000,
-//     maxResponseTime: 10000,
-//     request: {
-//       url: `https://mobileadmin.zscalerbeta.net/papi/public/v1/getDeviceDetails`,
-//       method: 'GET',
-//       headers: [
-//         { key: 'Content-Type', value: 'application/json' },
-//         { key: 'auth-token', value: `${process.env.BETA_TOKEN}` },
-//       ],
-//       // query,
-//       followRedirects: true,
-//       skipSSL: false,
-//       assertions: [AssertionBuilder.statusCode().equals(200)],
-//     },
-//     runParallel: true,
-//   });
-// }
-
-// };
-// )}

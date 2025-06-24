@@ -5,7 +5,7 @@ const axios = require('axios').default;
 let environment;
 
 const checkly_apiKey = process.env.CHECKLY_CLI_API_KEY;
-const checkly_accountid = process.env.CHECKLY_ACCOUNT_ID;
+const checkly_accountid = process.env.CHECKLY_ID;
 
 try {
   console.log(request.url, 'request url');
@@ -21,6 +21,9 @@ try {
   console.log('Environment:', environment);
 
   const responseBody = await JSON.parse(response.body);
+
+  console.log('responseBody', responseBody);
+
   if (!responseBody.jwtToken) {
     throw new Error('Token not found in response');
   }
@@ -34,6 +37,7 @@ try {
       // This is the request BODY (data)
       key: `${environment}_TOKEN`,
       value: jwtToken,
+      secret: true,
     },
     {
       // This is the Axios config object (headers, etc.)
@@ -45,7 +49,7 @@ try {
       },
     }
   );
-  // console.log(tokenUpdateReponse, 'tokenUpdateReponse');
+  console.log('Successful update:', tokenUpdateResponse);
 } catch (error) {
-  console.error('Failed to parse token:', error);
+  throw new Error('Error occurred:', error);
 }
