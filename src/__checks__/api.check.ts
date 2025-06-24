@@ -42,7 +42,7 @@ for (let i = 0; i < environments.length; i++) {
       degradedResponseTime: 5000,
       maxResponseTime: 10000,
       activated: true,
-      frequency: 60,
+      frequency: 5,
       request: {
         url: `${baseUrl}${endpoint.url}`,
         method: endpoint.method,

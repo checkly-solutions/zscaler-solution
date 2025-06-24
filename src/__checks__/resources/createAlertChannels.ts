@@ -6,5 +6,5 @@ https://www.checklyhq.com/docs/cli/constructs-reference/#using-fromid-to-referen
 */
 import { PagerdutyAlertChannel, SlackAlertChannel } from 'checkly/constructs'
 
-export const pagerdutyChannel = PagerdutyAlertChannel.fromId('pagerduty-255654')
-export const slackChannel = SlackAlertChannel.fromId('slack-255653')
+export const pagerdutyChannel = PagerdutyAlertChannel.fromId('255654')
+export const slackChannel = SlackAlertChannel.fromId('255653')
