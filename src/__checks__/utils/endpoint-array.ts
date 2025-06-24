@@ -32,6 +32,11 @@ export const endpoint_array = [
     method: 'GET',
     url: '/papi/public/v1/downloadServiceStatus?osTypes=1,2',
   },
+  {
+    name: 'get devices',
+    method: 'GET',
+    url: '/papi/public/v1/getDevices',
+  },
 ];
 
 // {
