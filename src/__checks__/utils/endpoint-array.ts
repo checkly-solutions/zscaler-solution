@@ -1,3 +1,14 @@
+/* Explainer:
+environments - array of available environments for use within scripts
+
+endpoints - array of API endpoints that you should work across all 
+mobile admin environments. 
+
+auth-endpoints - array of auth API endpoints for generating tokens
+*/
+
+export const environments = ['BETA', 'ZS1', 'ZS2'];
+
 export const endpoint_array = [
   {
     name: 'download devices os types',

@@ -1,16 +1,18 @@
 // @ts-nocheck
-import { ApiCheck, AssertionBuilder, RetryStrategyBuilder } from 'checkly/constructs';
-import { endpoint_array } from './utils/endpoint-array';
-import { apiGroups } from './resources/createGroup';
 
-const environments = ['BETA', 'ZS1', 'ZS2'];
+/* Explainer:
+
+*/
+
+import { ApiCheck, AssertionBuilder, RetryStrategyBuilder } from 'checkly/constructs';
+import { endpoint_array, environments } from './utils/endpoint-array';
+import { apiGroups } from './resources/createGroup';
 
 const ZS1_API_URL = 'https://mobileadmin.zscalerone.net';
 const ZS2_API_URL = 'https://mobileadmin.zscalertwo.net';
 const BETA_API_URL = 'https://mobileadmin.zscalerbeta.net';
 
 for (let i = 0; i < environments.length; i++) {
-
   for (const endpoint of endpoint_array) {
     let cleanName = endpoint.name.replaceAll(' ', '-').toLowerCase();
     let environment = environments[i];
@@ -24,8 +26,6 @@ for (let i = 0; i < environments.length; i++) {
     } else if (environment === 'BETA') {
       baseUrl = BETA_API_URL;
     }
-
-    console.log('environment', environment)
 
     new ApiCheck(`${method}-${environment}-${cleanName}-api`, {
       name: `${method} ${environment} ${cleanName} API`,

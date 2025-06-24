@@ -1,6 +1,10 @@
 // @ts-nocheck
-// const environments = ['BETA', 'ZS1', 'ZS2'];
 const axios = require('axios').default;
+
+/* Explainer:
+After successful auth from API check, get the original request url
+determine environment of request URL, so we can update correct auth env variable in checkly
+*/
 
 let environment;
 
@@ -8,8 +12,6 @@ const checkly_apiKey = process.env.CHECKLY_CLI_API_KEY;
 const checkly_accountid = process.env.CHECKLY_ID;
 
 try {
-  console.log(request.url, 'request url');
-  // zscalerone, zscalertwo, zscalerbeta
   if (request.url.includes('zscalerone')) {
     environment = 'ZS1';
   } else if (request.url.includes('zscalertwo')) {
@@ -18,21 +20,15 @@ try {
     environment = 'BETA';
   }
 
-  console.log('Environment:', environment);
-
   const responseBody = await JSON.parse(response.body);
-
-  console.log('responseBody', responseBody);
 
   if (!responseBody.jwtToken) {
     throw new Error('Token not found in response');
   }
   const jwtToken = await responseBody.jwtToken;
 
-  console.log(jwtToken, 'jwtToken');
-
   const tokenUpdateResponse = await axios.put(
-    `variables/${environment}_TOKEN`, // Relative path since you'll use baseURL
+    `variables/${environment}_TOKEN`, 
     {
       // This is the request BODY (data)
       key: `${environment}_TOKEN`,
@@ -40,7 +36,6 @@ try {
       secret: true,
     },
     {
-      // This is the Axios config object (headers, etc.)
       baseURL: 'https://api.checklyhq.com/v1/',
       headers: {
         Authorization: `Bearer ${checkly_apiKey}`,

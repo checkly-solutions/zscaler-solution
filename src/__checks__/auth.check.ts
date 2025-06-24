@@ -1,8 +1,7 @@
 // @ts-nocheck
 import { ApiCheck, AssertionBuilder } from 'checkly/constructs';
 import { apiGroups } from './resources/createGroup';
-
-const environments = ['BETA', 'ZS1', 'ZS2'];
+import { environments } from './utils/endpoint-array';
 
 for (let i = 0; i < environments.length; i++) {
   // const group = createGroup(environments[i]);

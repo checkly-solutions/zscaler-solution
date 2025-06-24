@@ -1,4 +1,13 @@
 import { CheckGroupV2 } from 'checkly/constructs';
+import { environments } from '../utils/endpoint-array';
+
+/* Explainer:
+Creates array of groups based on available environments and makes them
+immediately exportable to other files by referencing apiGroups.<environment>.
+
+We pass minimal configuration to the groups, so that they don't overwrite check
+settings.
+*/
 
 // Function to create a single group
 function createGroup(environmentName: string) {
@@ -20,6 +29,5 @@ export function createGroupsFromEnvironments(environments: string[]) {
   return groups;
 }
 
-// Example usage:
-const environments = ['BETA', 'ZS1', 'ZS2'];
+// Create groups
 export const apiGroups = createGroupsFromEnvironments(environments);
