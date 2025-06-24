@@ -27,10 +27,10 @@ for (let i = 0; i < environments.length; i++) {
 
     console.log('environment', environment)
 
-    new ApiCheck(`${method}-${environments[i]}-${cleanName}-api`, {
-      name: `${method} ${environments[i]} ${cleanName} API`,
-      group: apiGroups[environments[i]],
-      tags: [`${environments[i]}-${cleanName}`, `${environments[i]}`],
+    new ApiCheck(`${method}-${environment}-${cleanName}-api`, {
+      name: `${method} ${environment} ${cleanName} API`,
+      group: apiGroups[environment],
+      tags: [`${environment}-${cleanName}`, `${environment}`],
       degradedResponseTime: 5000,
       maxResponseTime: 10000,
       activated: true,
@@ -40,7 +40,7 @@ for (let i = 0; i < environments.length; i++) {
         method: endpoint.method,
         headers: [
           { key: 'Content-Type', value: 'application/json' },
-          { key: 'auth-token', value: process.env[`${environments[i]}_TOKEN`] || '' },
+          { key: 'auth-token', value: process.env[`${environment}_TOKEN`] || '' },
         ],
         followRedirects: true,
         skipSSL: false,
