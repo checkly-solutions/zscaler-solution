@@ -1,13 +1,20 @@
 /* Explainer:
 environments - array of available environments for use within scripts
 
+auth-endpoints - array of auth API endpoints for generating tokens
+
 endpoints - array of API endpoints that you should work across all 
 mobile admin environments. 
 
-auth-endpoints - array of auth API endpoints for generating tokens
 */
 
 export const environments = ['BETA', 'ZS1', 'ZS2'];
+
+export const auth_endpoint_array = {
+  ZS1: 'https://mobileadmin.zscalerone.net/papi/auth/v1/login',
+  ZS2: 'https://mobileadmin.zscalertwo.net/papi/auth/v1/login',
+  BETA: 'https://mobileadmin.zscalerbeta.net/papi/auth/v1/login',
+};
 
 export const endpoint_array = [
   {

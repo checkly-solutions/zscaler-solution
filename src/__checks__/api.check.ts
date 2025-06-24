@@ -1,7 +1,12 @@
 // @ts-nocheck
 
 /* Explainer:
-
+  There are three available environments, we iterate through them.
+  We have three base URLs for each of those environments we need to use for our checks
+  Iterate through list of available environments
+  Iterate through list of available endpoints to extract; name, method, and url to be hit.
+  Set group by referencing apiGroups & environment created within createGroup file
+  Pass along the appropriate auth in the body for a given environment
 */
 
 import { ApiCheck, AssertionBuilder, RetryStrategyBuilder } from 'checkly/constructs';

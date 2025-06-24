@@ -1,25 +1,30 @@
 // @ts-nocheck
+
+/* Explainer:
+  Iterate through list of available environments
+  Set group by referencing apiGroups & environment created within createGroup file
+  Pass along the appropriate auth in the body
+  Send request and do an after auth update to Checkly tokens 
+*/
+
 import { ApiCheck, AssertionBuilder } from 'checkly/constructs';
 import { apiGroups } from './resources/createGroup';
-import { environments } from './utils/endpoint-array';
+import { environments, auth_endpoint_array } from './utils/endpoint-array';
 
 for (let i = 0; i < environments.length; i++) {
-  // const group = createGroup(environments[i]);
-  const body = process.env[`${environments[i]}_API_KEY`];
+  let environment = environments[i];
 
-  if (!body) {
-    throw new Error('BETA_API_KEY environment variable is not set');
-  }
-  // console.log(environments[i]); // Access element using index
-  new ApiCheck(`post-${environments[i]}-authentication-api`, {
-    name: `POST ${environments[i]} authentication API`,
-    group: apiGroups[environments[i]],
-    tags: [`${environments[i]}-authentication`, `${environments[i]}`],
+  let body = process.env[`${environment}_API_KEY`];
+
+  new ApiCheck(`post-${environment}-authentication-api`, {
+    name: `POST ${environment} authentication API`,
+    group: apiGroups[environment],
+    tags: [`${environment}-authentication`, `${environment}`],
     degradedResponseTime: 5000,
     maxResponseTime: 10000,
-    frequency: 24 * 60, // 24 hours in minutes
+    frequency: 24 * 60,
     request: {
-      url: process.env[`${environments[i]}_AUTH_URL`],
+      url: auth_endpoint_array[environment],
       method: 'POST',
       headers: [{ key: 'Content-Type', value: 'application/json' }],
       body,
