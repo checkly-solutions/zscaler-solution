@@ -1,15 +1,15 @@
 // @ts-nocheck
-const axios = require('axios').default;
 
 /* Explainer:
 After successful auth from API check, get the original request url
 determine environment of request URL, so we can update correct auth env variable in checkly
 */
 
-let environment;
-
+const axios = require('axios').default;
 const checkly_apiKey = process.env.CHECKLY_CLI_API_KEY;
 const checkly_accountid = process.env.CHECKLY_ID;
+
+let environment;
 
 try {
   if (request.url.includes('zscalerone')) {

@@ -12,6 +12,8 @@
 import { ApiCheck, AssertionBuilder, RetryStrategyBuilder } from 'checkly/constructs';
 import { endpoint_array, environments } from './utils/endpoint-array';
 import { apiGroups } from './resources/createGroup';
+import { pagerdutyChannel, slackChannel } from './resources/createAlertChannels';
+const alertChannels = [pagerdutyChannel, slackChannel]
 
 const ZS1_API_URL = 'https://mobileadmin.zscalerone.net';
 const ZS2_API_URL = 'https://mobileadmin.zscalertwo.net';
@@ -36,6 +38,7 @@ for (let i = 0; i < environments.length; i++) {
       name: `${method} ${environment} ${cleanName} API`,
       group: apiGroups[environment],
       tags: [`${environment}-${cleanName}`, `${environment}`],
+      alertChannels,
       degradedResponseTime: 5000,
       maxResponseTime: 10000,
       activated: true,

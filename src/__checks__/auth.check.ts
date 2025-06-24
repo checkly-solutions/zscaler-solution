@@ -10,6 +10,8 @@
 import { ApiCheck, AssertionBuilder } from 'checkly/constructs';
 import { apiGroups } from './resources/createGroup';
 import { environments, auth_endpoint_array } from './utils/endpoint-array';
+import { pagerdutyChannel, slackChannel } from './resources/createAlertChannels';
+const alertChannels = [pagerdutyChannel, slackChannel]
 
 for (let i = 0; i < environments.length; i++) {
   let environment = environments[i];
@@ -19,6 +21,7 @@ for (let i = 0; i < environments.length; i++) {
   new ApiCheck(`post-${environment}-authentication-api`, {
     name: `POST ${environment} authentication API`,
     group: apiGroups[environment],
+    alertChannels,
     tags: [`${environment}-authentication`, `${environment}`],
     degradedResponseTime: 5000,
     maxResponseTime: 10000,
