@@ -37,8 +37,9 @@ for (let i = 0; i < environments.length; i++) {
     new ApiCheck(`${method}-${environment}-${cleanName}-api`, {
       name: `${method} ${environment} ${cleanName} API`,
       group: apiGroups[environment],
-      tags: [`${environment}-${cleanName}`, `${environment}`],
+      tags: [`${environment}, 'api`, 'cli', `${method}`],
       alertChannels,
+      muted: true,
       degradedResponseTime: 5000,
       maxResponseTime: 10000,
       activated: true,

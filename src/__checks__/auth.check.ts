@@ -22,7 +22,7 @@ for (let i = 0; i < environments.length; i++) {
     name: `POST ${environment} authentication API`,
     group: apiGroups[environment],
     alertChannels,
-    tags: [`${environment}-authentication`, `${environment}`],
+    tags: [`${environment}, 'api`, 'cli', `POST`, 'authentication'],
     degradedResponseTime: 5000,
     maxResponseTime: 10000,
     frequency: 24 * 60,
