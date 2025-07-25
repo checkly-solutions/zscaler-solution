@@ -20,45 +20,54 @@ export const endpoint_array = [
   {
     name: 'download devices os types',
     method: 'GET',
-    url: '/papi/public/v1/downloadDevices?osTypes=1,2',
+    url: '/papi/public/v1/downloadDevices',
+    query: {
+      osTypes: '1,2'
+    }
   },
   {
     name: 'download devices registration types',
     method: 'GET',
-    url: '/papi/public/v1/downloadDevices?registrationTypes=1,3',
+    url: '/papi/public/v1/downloadDevices',
+    query: {
+      registrationTypes: '1,3'
+    }
   },
   {
     name: 'download service status',
     method: 'GET',
-    url: '/papi/public/v1/downloadServiceStatus?osTypes=1,2',
+    url: '/papi/public/v1/downloadServiceStatus',
+    query: {
+      osTypes: '1,2'
+    }
   },
   {
     name: 'get devices',
     method: 'GET',
-    url: '/papi/public/v1/getDevices',
+    url: '/papi/public/v1/getDevices'
+  },
+  {
+    name: 'download disable reasons',
+    method: 'GET',
+    url: '/papi/public/v1/downloadDisableReasons',
+    query: {
+      osTypes: '1',
+      startDate: '2025-01-01'
+    }
   },
 ];
 
-// {
-//   name: 'download disable reasons',
-//   method: 'GET',
-//   url: '/papi/public/v1/downloadDisableReasons',
-//   headers: {
-//     // what timezone string is expected here?
-//     'Time-Zone': 'string',
-//   },
-//   query: {
-//     osTypes: '1,2',
-//     startDate: '2023-10-01T00:00:00Z',
-//     endDate: '2023-10-31T23:59:59Z',
-//   },
-// },
+// Assertions -- status code == 200
+// Assertions -- Check if the output matches the getDevices output
+// Multistep checks will be generated dynamically and separated out to individual endpoints
+// Refactor to take in query parameters
+
 // {
 //   name: 'get device details',
 //   method: 'GET',
-//   url: '/papi/public/v1/getDeviceDetails',
+//   url: '/papi/public/v1/getDeviceDetails', // need to pass the output of get devices 
 //   query: {
-//     username: 'string',
+//     username: 'string', // get devices returns "user" -- pass this as "username" to second API call
 //     udid: 'string',
 //   },
 // },
@@ -76,7 +85,7 @@ export const endpoint_array = [
 //   // must provide udid
 //   name: 'get otp',
 //   method: 'GET',
-//   url: '/papi/public/v1/getOtp',
+//   url: '/papi/public/v1/getOtp', // need to pass the output of get devices
 //   query: {
 //     udid: 'string',
 //   },
@@ -84,53 +93,19 @@ export const endpoint_array = [
 // {
 //   name: 'get passwords',
 //   method: 'GET',
-//   url: '/papi/public/v1/getPasswords',
+//   url: '/papi/public/v1/getPasswords', //need to pass the output of get devices
 //   query: {
 //     username: 'string',
 //     osType: 2,
 //   },
 // },
 // {
-//   name: 'get zdx group entitlements',
+//   name: 'get zdx group entitlements', // getting unauthorized, pavithra to see why
 //   method: 'GET',
 //   url: '/papi/public/v1/getZdxGroupEntitlements',
 //   query: {
 //     'page integer': 'integer',
 //     pageSize: 'integer',
 //     'search string': 'string',
-//   },
-// },
-// {
-//   name: 'remove devices',
-//   method: 'POST',
-//   url: '/papi/public/v1/removeDevices',
-//   query: {
-//     'page integer': 'integer',
-//     pageSize: 'integer',
-//     'search string': 'string',
-//   },
-// },
-// {
-//   name: 'remove machine tunnel',
-//   method: 'POST',
-//   url: '/papi/public/v1/removeMachineTunnel',
-//   query: {
-//     hostName: 'string',
-//     machineToken: 'string',
-//   },
-//   body: {
-//     hostNames: ['string'],
-//     machineToken: 'string',
-//   },
-// },
-// {
-//   // Force removes the enrolled device from the portal. You can only remove devices that are in registered or device removal pending state. At least one criterion (username, Zscaler Client Connector version, OS type, or UDID) must be specified to remove devices.
-//   name: 'force remove devices',
-//   method: 'POST',
-//   url: '/papi/public/v1/forceRemoveDevices',
-//   body: {
-//     clientConnectorVersion: ['string'],
-//     udids: ['string'],
-//     userName: 'string',
 //   },
 // },
