@@ -47,6 +47,7 @@ for (let i = 0; i < environments.length; i++) {
       request: {
         url: `${baseUrl}${endpoint.url}`,
         method: endpoint.method,
+        queryParameters: endpoint.query ? Object.entries(endpoint.query).map(([key, value]) => ({ key, value })) : [],
         headers: [
           { key: 'Content-Type', value: 'application/json' },
           { key: 'auth-token', value: process.env[`${environment}_TOKEN`] || '' },
